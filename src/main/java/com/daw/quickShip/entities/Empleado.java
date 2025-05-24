@@ -35,5 +35,5 @@ public class Empleado {
     @Email(message = "Formato de email inválido")
     private String email;
 
-    private boolean activo = true;
+    private boolean active = true;
 }

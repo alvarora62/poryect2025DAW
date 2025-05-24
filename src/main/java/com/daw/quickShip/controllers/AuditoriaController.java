@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Auditoría", description = "Operaciones relacionadas con el historial de acciones del sistema")
 @RestController
-@RequestMapping("/auditoria")
+@RequestMapping("/api/auditoria")
 @RequiredArgsConstructor
 public class AuditoriaController {
 

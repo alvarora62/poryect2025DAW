@@ -37,7 +37,7 @@ public class Repartidor {
     @Email(message = "Formato de email inválido")
     private String email;
 
-    private boolean activo = true;
+    private boolean active = true;
 
     @NotEmpty(message = "El nombre de la empresa no puede estar vacío")
     @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$", message = "El nombre de la empresa solo debe contener letras y espacios")
