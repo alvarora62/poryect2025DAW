@@ -2,6 +2,7 @@ package com.daw.quickShip.controllers;
 
 import com.daw.quickShip.entities.Credenciales;
 import com.daw.quickShip.servicies.CredencialesService;
+import com.daw.quickShip.servicies.CredencialesServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Autenticación", description = "API para registrar e iniciar sesión con credenciales")
 public class CredencialesController {
 
-    private final CredencialesService credencialesService;
+    private final CredencialesServiceImpl credencialesService;
 
     @PostMapping("/signup")
     @Operation(
