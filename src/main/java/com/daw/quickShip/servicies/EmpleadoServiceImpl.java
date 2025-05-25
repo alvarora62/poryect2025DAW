@@ -2,11 +2,13 @@ package com.daw.quickShip.servicies;
 
 import com.daw.quickShip.entities.Empleado;
 import com.daw.quickShip.repositories.EmpleadoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -38,15 +40,16 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     }
 
     @Override
-    public ResponseEntity<Void> changeActiveStatus(Empleado empleado, boolean isActive) {
-        Optional<Empleado> existingEmpleado = empleadoRepository.findById(empleado.getId());
-        if (existingEmpleado.isPresent()) {
-            Empleado updatedEmpleado = existingEmpleado.get();
-            updatedEmpleado.setActive(isActive);
-            empleadoRepository.save(updatedEmpleado);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+    @Transactional
+    public ResponseEntity<Void> changeActiveStatus(String dniEmpleado, boolean isActive) {
+        Empleado empleado = empleadoRepository.findByDni(dniEmpleado)
+                .orElseThrow(() -> new EntityNotFoundException("Empleado not found with DNI: " + dniEmpleado));
+
+        empleado.setActive(isActive);
+        empleadoRepository.save(empleado);
+
+        return ResponseEntity.ok().build();
     }
+
 }
 

@@ -12,5 +12,5 @@ public interface EmpleadoService {
     Page<Empleado> listAllNotActive(Pageable pageable);
 
     ResponseEntity<Void> save(Empleado empleado);
-    ResponseEntity<Void> changeActiveStatus(Empleado empleado, boolean isActive);
+    ResponseEntity<Void> changeActiveStatus(String idEmpleado, boolean isActive);
 }

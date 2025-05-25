@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/empleados")
 @Tag(name = "Empleado", description = "API for managing empleados")
@@ -44,8 +45,8 @@ public class EmpleadoController {
 
     @PatchMapping("/status")
     @Operation(summary = "Change empleado active status", description = "Updates the active status of an empleado.")
-    public ResponseEntity<Void> changeActiveStatus(@RequestBody Empleado empleado, @RequestParam boolean isActive) {
-        return empleadoService.changeActiveStatus(empleado, isActive);
+    public ResponseEntity<Void> changeActiveStatus(@RequestParam String dniEmpleado, @RequestParam boolean isActive) {
+        return empleadoService.changeActiveStatus(dniEmpleado, isActive);
     }
 }
 
