@@ -1,5 +1,6 @@
 package com.daw.quickShip.controllers;
 
+import com.daw.quickShip.DTOs.RegisterDTO;
 import com.daw.quickShip.entities.Credenciales;
 import com.daw.quickShip.servicies.CredencialesService;
 import com.daw.quickShip.servicies.CredencialesServiceImpl;
@@ -24,8 +25,8 @@ public class CredencialesController {
             summary = "Registrar nuevo usuario",
             description = "Crea una nueva cuenta de usuario con nombre de usuario y contraseña"
     )
-    public ResponseEntity<?> registrar(@Valid @RequestBody Credenciales credenciales) {
-        Credenciales nuevo = credencialesService.registrar(credenciales);
+    public ResponseEntity<?> registrar(@Valid @RequestBody RegisterDTO registerDTO) {
+        Credenciales nuevo = credencialesService.registrar(registerDTO);
         return ResponseEntity.ok(nuevo);
     }
 
