@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Auth from "../pages/Auth";
 import Empleados from "../pages/Empleados";
+import Repartidores from "../pages/Repartidores";
+import Auditoria from "../pages/Auditoria";
 
 const AppRouter = () => {
   return (
@@ -10,6 +12,8 @@ const AppRouter = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Auth />} />	
           <Route path="/empleados" element={<Empleados />} />
+          <Route path="/repartidores" element={<Repartidores />} />
+          <Route path="/auditoria" element={<Auditoria />} />
         </Routes>
     </Router>
   );
