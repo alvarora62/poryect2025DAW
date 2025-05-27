@@ -1,6 +1,6 @@
 package com.daw.quickShip.servicies;
 
-import com.daw.quickShip.DTOs.RegisterDTO;
+import com.daw.quickShip.DTOs.RegisterCredencialesDTO;
 import com.daw.quickShip.entities.Credenciales;
 import com.daw.quickShip.repositories.CredencialesRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +15,12 @@ public class CredencialesServiceImpl implements CredencialesService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Credenciales registrar(RegisterDTO registerDTO) {
+    public Credenciales registrar(RegisterCredencialesDTO registerCredencialesDTO) {
         Credenciales credenciales = Credenciales.builder()
-                .username(registerDTO.username())
-                .password(passwordEncoder.encode(registerDTO.password()))
+                .username(registerCredencialesDTO.username())
+                .password(passwordEncoder.encode(registerCredencialesDTO.password()))
+                .empleado(registerCredencialesDTO.empleado())
+                .repartidor(registerCredencialesDTO.repartidor())
                 .build();
         return credencialesRepository.save(credenciales);
     }
