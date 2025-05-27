@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+@CrossOrigin(origins = "*")
 @Tag(name = "Auditoría", description = "Operaciones relacionadas con el historial de acciones del sistema")
 @RestController
 @RequestMapping("/api/auditoria")
