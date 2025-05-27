@@ -1,8 +1,11 @@
-import { Container, Table, Spinner, Pagination } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Table, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import CustomNavbar from '../components/Navbar';
 import CustomFooter from '../components/Footer';
-import { useState, useEffect } from 'react';
+import AuditoriaModal from '../components/AuditoriaModal';
+import AuditoriaTable from '../components/AuditoriaTable';
+import config from '../config.json';
 
 const StyledContainer = styled(Container)`
   margin-top: 2rem;
@@ -35,87 +38,75 @@ const CenteredTable = styled(Table)`
 `;
 
 function AuditoriaPage() {
-  const [auditoria, setAuditoria] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
+  const [historial, setHistorial] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [nuevoRegistro, setNuevoRegistro] = useState({
+    username: '',
+    accion: ''
+  });
+  const [error, setError] = useState('');
 
-  useEffect(() => {
-    const fetchAuditoria = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`http://localhost:8080/api/auditoria/historial?page=${page}&size=10&sort=fecha,desc`);
-        const data = await response.json();
-        setAuditoria(Array.isArray(data.content) ? data.content : []);
-        setTotalPages(data.totalPages || 0);
-      } catch (error) {
-        console.error('Error fetching auditoría:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAuditoria();
-  }, [page]);
-
-  const handlePageChange = (newPage) => {
-    if (newPage >= 0 && newPage < totalPages) {
-      setPage(newPage);
+  const fetchHistorial = async () => {
+    try {
+      const response = await fetch(`${config.apiBaseUrl}/api/auditoria/historial`);
+      if (!response.ok) throw new Error('Error al obtener historial');
+      const data = await response.json();
+      setHistorial(data.content);
+    } catch (err) {
+      console.error(err);
+      setError('No se pudo cargar el historial');
     }
   };
 
-  const renderPagination = () => (
-    <Pagination className="justify-content-center mt-3">
-      <Pagination.Prev onClick={() => handlePageChange(page - 1)} disabled={page === 0} />
-      {[...Array(totalPages)].map((_, idx) => (
-        <Pagination.Item key={idx} active={idx === page} onClick={() => handlePageChange(idx)}>
-          {idx + 1}
-        </Pagination.Item>
-      ))}
-      <Pagination.Next onClick={() => handlePageChange(page + 1)} disabled={page >= totalPages - 1} />
-    </Pagination>
-  );
+  useEffect(() => {
+    fetchHistorial();
+  }, []);
+
+  const handleChange = (e) => {
+    setNuevoRegistro({ ...nuevoRegistro, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const response = await fetch(`${config.apiBaseUrl}/api/auditoria/anotar`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nuevoRegistro),
+      });
+
+      if (!response.ok) throw new Error('Error al registrar acción');
+
+      setShowModal(false);
+      setNuevoRegistro({ username: '', accion: '' });
+      fetchHistorial();
+    } catch (err) {
+      console.error(err);
+      setError('No se pudo registrar la acción');
+    }
+  };
 
   return (
     <div>
       <CustomNavbar />
       <StyledContainer>
-        <h2 style={{ marginBottom: '2rem', paddingLeft: '5%' }}>Historial de Auditoría</h2>
-        {loading ? (
-          <div className="text-center">
-            <Spinner animation="border" role="status" />
-          </div>
-        ) : (
-          <>
-            <CenteredTable bordered hover>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Usuario</th>
-                  <th>Acción</th>
-                  <th>Fecha</th>
-                </tr>
-              </thead>
-              <tbody>
-                {auditoria.length > 0 ? (
-                  auditoria.map((entry) => (
-                    <tr key={entry.id}>
-                      <td>{entry.id}</td>
-                      <td>{entry.username}</td>
-                      <td>{entry.accion}</td>
-                      <td>{entry.fecha}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="4">No hay registros de auditoría.</td>
-                  </tr>
-                )}
-              </tbody>
-            </CenteredTable>
-            {renderPagination()}
-          </>
-        )}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', paddingLeft: '5%', paddingRight: '5%' }}>
+          <h2>Historial de Auditoría</h2>
+          <Button variant="success" onClick={() => setShowModal(true)}>
+            Registrar nueva acción
+          </Button>
+        </div>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <AuditoriaTable data={historial} />
+        <AuditoriaModal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          auditoria={nuevoRegistro}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          error={error}
+        />
       </StyledContainer>
       <CustomFooter />
     </div>
