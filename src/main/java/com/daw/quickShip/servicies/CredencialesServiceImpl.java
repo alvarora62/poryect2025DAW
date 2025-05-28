@@ -16,6 +16,8 @@ public class CredencialesServiceImpl implements CredencialesService {
 
     @Override
     public Credenciales registrar(RegisterCredencialesDTO registerCredencialesDTO) {
+
+
         Credenciales credenciales = Credenciales.builder()
                 .username(registerCredencialesDTO.username())
                 .password(passwordEncoder.encode(registerCredencialesDTO.password()))
