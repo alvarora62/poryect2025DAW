@@ -11,30 +11,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*")
+@Tag(name = "Autenticación", description = "API para registrar e iniciar sesión con credenciales")
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
-@Tag(name = "Autenticación", description = "API para registrar e iniciar sesión con credenciales")
 public class CredencialesController {
 
     private final CredencialesServiceImpl credencialesService;
 
     @PostMapping("/signup")
-    @Operation(
-            summary = "Registrar nuevo usuario",
-            description = "Crea una nueva cuenta de usuario con nombre de usuario y contraseña"
-    )
+    @Operation(summary = "Registrar nuevo usuario", description = "Crea una nueva cuenta de usuario con nombre de usuario y contraseña")
     public ResponseEntity<?> registrar(@Valid @RequestBody RegisterCredencialesDTO registerCredencialesDTO) {
         Credenciales nuevo = credencialesService.registrar(registerCredencialesDTO);
         return ResponseEntity.ok(nuevo);
     }
 
     @PostMapping("/login")
-    @Operation(
-            summary = "Iniciar sesión",
-            description = "Autentica al usuario utilizando nombre de usuario y contraseña"
-    )
+    @Operation(summary = "Iniciar sesión", description = "Autentica al usuario utilizando nombre de usuario y contraseña")
     public ResponseEntity<?> login(@Valid @RequestBody LoginDTO loginDTO) {
         Credenciales user = credencialesService.login(loginDTO.username(), loginDTO.password());
         if (user != null) {
