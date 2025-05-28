@@ -12,10 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*")
+@Tag(name = "Empleado", description = "API for managing empleados")
 @RestController
 @RequestMapping("/api/empleados")
-@Tag(name = "Empleado", description = "API for managing empleados")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class EmpleadoController {
 
@@ -35,10 +35,7 @@ public class EmpleadoController {
 
     @PostMapping("/{dni}")
     @Operation(summary = "Update an existing empleado", description = "Updates an existing empleado by DNI.")
-    public ResponseEntity<Void> update(
-            @PathVariable String dni,
-            @Valid @RequestBody RegisterEmpleadoDTO registerEmpleadoDTO
-    ) {
+    public ResponseEntity<Void> update(@PathVariable String dni, @Valid @RequestBody RegisterEmpleadoDTO registerEmpleadoDTO) {
         return empleadoService.update(dni, registerEmpleadoDTO);
     }
 
