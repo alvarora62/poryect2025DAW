@@ -20,11 +20,14 @@ public class Pedido {
 
     private String direccion;
 
+    private String estado;
+
     @ManyToOne
     @JoinColumn(name = "repartidor_id")
     private Repartidor repartidor;
 
     private LocalDate fechaCreacion;
+
     private LocalDate fechaEntrega;
 
     @PrePersist
