@@ -1,5 +1,7 @@
 package com.daw.quickShip.utils;
 
+import com.daw.quickShip.exceptions.FormatException;
+
 public class PasswordValidator {
     /**
      * Valida la contraseña según los siguientes criterios:
@@ -10,17 +12,19 @@ public class PasswordValidator {
      * - No debe contener espacios.
      *
      * @param password La contraseña a validar.
-     * @return true si la contraseña cumple con todos los criterios de validación, false en caso contrario.
+     * @throws FormatException if the password is not valid
      */
-    public static boolean isPasswordValid(String password) {
+    public static void isPasswordValid(String password) {
         if (password == null || password.trim().isEmpty())
-            return false;
+            throw new FormatException("La contraseña no puede estar vacia");
         if (password.contains(" "))
-            return false;
+            throw new FormatException("La contraseña no puede contener espacios en blanco");
 
-        return password.length() >= 8 &&
+        if (!(password.length() >= 8 &&
                 password.matches(".*[A-Z].*") &&
                 password.matches(".*[0-9].*") &&
-                password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~].*");
+                password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~].*"))) {
+            throw new FormatException("La contraseña tiene que contener una mayúscula, un número y un símbolo");
+        }
     }
 }

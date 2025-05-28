@@ -1,10 +1,15 @@
 package com.daw.quickShip.utils;
 
 import com.daw.quickShip.DTOs.RegisterEmpleadoDTO;
+import com.daw.quickShip.entities.Empleado;
 import com.daw.quickShip.exceptions.FormatException;
 
 public class EmpleadoValidator {
 
+    /**
+     * Validates the {@link RegisterEmpleadoDTO} and thrown a {@link FormatException} if anything is incorrect
+     * @param dto the {@link Empleado} to check
+     */
     public static void validateEmpleadoData(RegisterEmpleadoDTO dto) {
         if (!dto.nombre().matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$")) {
             throw new FormatException("El nombre del empleado no cumple con el formato correcto.");

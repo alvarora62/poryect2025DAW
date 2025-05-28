@@ -1,10 +1,15 @@
 package com.daw.quickShip.utils;
 
 import com.daw.quickShip.DTOs.RegisterRepartidorDTO;
+import com.daw.quickShip.entities.Repartidor;
 import com.daw.quickShip.exceptions.FormatException;
 
 public class RepartidorValidator {
 
+    /**
+     * Validates the {@link RegisterRepartidorDTO} and thrown a {@link FormatException} if anything is incorrect
+     * @param dto the {@link Repartidor} to check
+     */
     public static void validateRepartidorData(RegisterRepartidorDTO dto) {
         if (dto.nombre() == null || dto.nombre().isBlank()) {
             throw new FormatException("El nombre no puede estar vacío.");
