@@ -1,6 +1,8 @@
 package com.daw.quickShip.controllers;
 
 import com.daw.quickShip.DTOs.RegisterEmpleadoDTO;
+import com.daw.quickShip.DTOs.SelectEmpleadoDTO;
+import com.daw.quickShip.DTOs.SelectRepartidorDTO;
 import com.daw.quickShip.entities.Empleado;
 import com.daw.quickShip.servicies.EmpleadoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Empleado", description = "API for managing empleados")
 @RestController
@@ -25,6 +29,12 @@ public class EmpleadoController {
     @Operation(summary = "List all empleados", description = "Retrieves a paginated list of all empleados.")
     public Page<Empleado> listAll(Pageable pageable) {
         return empleadoService.listAll(pageable);
+    }
+
+    @GetMapping("/selectList")
+    @Operation(summary = "Listar todos los empleados para un select", description = "Devuelve una lista de todos los nombres de los empleados e id.")
+    public List<SelectEmpleadoDTO> listSlectEmpleado() {
+        return empleadoService.selectList();
     }
 
     @PostMapping

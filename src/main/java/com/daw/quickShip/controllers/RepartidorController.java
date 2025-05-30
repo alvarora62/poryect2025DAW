@@ -1,6 +1,7 @@
 package com.daw.quickShip.controllers;
 
 import com.daw.quickShip.DTOs.RegisterRepartidorDTO;
+import com.daw.quickShip.DTOs.SelectRepartidorDTO;
 import com.daw.quickShip.entities.Repartidor;
 import com.daw.quickShip.servicies.RepartidorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Repartidor", description = "API para gestionar repartidores")
 @RestController
@@ -26,6 +29,12 @@ public class RepartidorController {
     @Operation(summary = "Listar todos los repartidores", description = "Devuelve una lista paginada de todos los repartidores.")
     public Page<Repartidor> listAll(@Parameter(description = "Configuración de paginación") Pageable pageable) {
         return repartidorService.listAll(pageable);
+    }
+
+    @GetMapping("/selectList")
+    @Operation(summary = "Listar todos los nombres de empresa para un select", description = "Devuelve una lista de todos los nombres de empresa.")
+    public List<String> listSlectRepartidor() {
+        return repartidorService.selectList();
     }
 
     @PostMapping
