@@ -20,7 +20,19 @@ public class Pedido {
 
     private String direccion;
 
-    private String estado;
+    @ManyToOne
+    @JoinColumn(name = "estado_id")
+    private EstadoPedido estado;
+
+    @ManyToOne
+    @JoinColumn(name = "producto_id")
+    private Producto producto;
+
+    private int cantidad;
+
+    @ManyToOne
+    @JoinColumn(name = "empleado_id")
+    private Empleado empleado;
 
     @ManyToOne
     @JoinColumn(name = "repartidor_id")
@@ -33,5 +45,6 @@ public class Pedido {
     @PrePersist
     public void prePersist() {
         this.fechaCreacion = LocalDate.now();
+        this.fechaEntrega = LocalDate.now().plusDays(7);
     }
 }

@@ -2,5 +2,19 @@ package com.daw.quickShip.DTOs;
 
 public record PedidoDTO(
 
-        String direccion) {
+        int id,
+
+        String direccion,
+
+        String estado,
+
+        Long idProducto,
+
+        int cantidad,
+
+        Long idEmpleado,
+
+        Long idRepartidor
+
+        ) {
 }
