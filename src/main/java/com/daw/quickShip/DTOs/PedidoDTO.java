@@ -14,7 +14,7 @@ public record PedidoDTO(
 
         Long idEmpleado,
 
-        Long idRepartidor
+        String nombreEmpresa
 
         ) {
 }

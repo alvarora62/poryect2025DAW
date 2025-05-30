@@ -1,17 +1,18 @@
 package com.daw.quickShip.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
+@Builder
 @Entity
-@Table
+@Table(name = "Pedido")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class Pedido {
 
     @Id
@@ -24,19 +25,21 @@ public class Pedido {
     @JoinColumn(name = "estado_id")
     private EstadoPedido estado;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     @JoinColumn(name = "producto_id")
     private Producto producto;
 
     private int cantidad;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     @JoinColumn(name = "empleado_id")
     private Empleado empleado;
 
     @ManyToOne
     @JoinColumn(name = "repartidor_id")
     private Repartidor repartidor;
+
+    private String repartidorEmpresa;
 
     private LocalDate fechaCreacion;
 
