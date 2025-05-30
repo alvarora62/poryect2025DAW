@@ -2,6 +2,7 @@ package com.daw.quickShip.servicies;
 
 import com.daw.quickShip.DTOs.RegisterCredencialesDTO;
 import com.daw.quickShip.DTOs.RegisterEmpleadoDTO;
+import com.daw.quickShip.DTOs.SelectEmpleadoDTO;
 import com.daw.quickShip.exceptions.FormatException;
 import com.daw.quickShip.entities.Empleado;
 import com.daw.quickShip.exceptions.ResourceNotFoundException;
@@ -15,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class EmpleadoServiceImpl implements EmpleadoService {
@@ -26,6 +30,14 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     public Page<Empleado> listAll(Pageable pageable) {
         return empleadoRepository.findAll(pageable);
     }
+
+    @Override
+    public List<SelectEmpleadoDTO> selectList() {
+        return empleadoRepository.findAll().stream()
+                .map(empleado -> new SelectEmpleadoDTO(empleado.getId(), empleado.getNombre()))
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public ResponseEntity<Void> create(RegisterEmpleadoDTO registerEmpleadoDTO) {
