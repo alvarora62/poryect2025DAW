@@ -26,11 +26,22 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     private final EmpleadoRepository empleadoRepository;
     private final CredencialesServiceImpl credencialesService;
 
+    /**
+     * Retrieves a paginated list of all employees.
+     *
+     * @param pageable pagination and sorting information.
+     * @return a {@link Page} of {@link Empleado} objects.
+     */
     @Override
     public Page<Empleado> listAll(Pageable pageable) {
         return empleadoRepository.findAll(pageable);
     }
 
+    /**
+     * Returns a simplified list of employees for selection UI components.
+     *
+     * @return a list of {@link SelectEmpleadoDTO} containing ID and name.
+     */
     @Override
     public List<SelectEmpleadoDTO> selectList() {
         return empleadoRepository.findAll().stream()
@@ -38,8 +49,28 @@ public class EmpleadoServiceImpl implements EmpleadoService {
                 .collect(Collectors.toList());
     }
 
-
+    /**
+     * Retrieves an employee by their ID.
+     *
+     * @param idEmpleado the ID of the employee.
+     * @return the {@link Empleado} if found.
+     * @throws ResourceNotFoundException if the employee does not exist.
+     */
     @Override
+    public Empleado findById(Long idEmpleado) {
+        return empleadoRepository.findById(idEmpleado)
+                .orElseThrow(() -> new ResourceNotFoundException("Empleado not found"));
+    }
+
+    /**
+     * Creates a new employee with the given data and registers their credentials.
+     *
+     * @param registerEmpleadoDTO the data to create the new employee.
+     * @return {@link ResponseEntity#ok()} if creation is successful.
+     * @throws FormatException if the email or DNI already exists.
+     */
+    @Override
+    @Transactional
     public ResponseEntity<Void> create(RegisterEmpleadoDTO registerEmpleadoDTO) {
 
         // Validar campos
@@ -47,12 +78,12 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
         // Comprobar si el DNI ya existe
         if (empleadoRepository.existsByDni(registerEmpleadoDTO.dni())) {
-            throw new FormatException("El DNI ya está registrado en el sistema.");
+            throw new FormatException("DNI already exists.");
         }
 
         // Comprobar si el email ya existe
         if (empleadoRepository.existsByEmail(registerEmpleadoDTO.email())) {
-            throw new FormatException("El email ya está registrado en el sistema.");
+            throw new FormatException("email already exists.");
         }
 
         // Crear nuevo empleado
@@ -78,14 +109,23 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Updates an existing employee identified by their DNI with new data.
+     *
+     * @param dni the unique DNI of the employee to update.
+     * @param registerEmpleadoDTO the new employee data.
+     * @return {@link ResponseEntity#ok()} if the update is successful.
+     * @throws ResourceNotFoundException if the employee is not found.
+     */
     @Override
+    @Transactional
     public ResponseEntity<Void> update(String dni, RegisterEmpleadoDTO registerEmpleadoDTO) {
 
         // Validar campos
         EmpleadoValidator.validateEmpleadoData(registerEmpleadoDTO);
 
         Empleado existingEmpleado = empleadoRepository.findByDni(dni)
-                .orElseThrow(() -> new ResourceNotFoundException("Empleado con DNI " + dni + " no encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Empleado with DNI " + dni + " not found."));
 
         // Actualizar campos permitidos
         existingEmpleado.setNombre(registerEmpleadoDTO.nombre());
@@ -97,6 +137,14 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Changes the active status of an employee based on their DNI.
+     *
+     * @param dniEmpleado the DNI of the employee.
+     * @param isActive the new active status.
+     * @return {@link ResponseEntity#ok()} if the status change is successful.
+     * @throws EntityNotFoundException if the employee is not found.
+     */
     @Override
     @Transactional
     public ResponseEntity<Void> changeActiveStatus(String dniEmpleado, boolean isActive) {
