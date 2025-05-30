@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class CredencialesServiceImpl implements CredencialesService {
 
     private final CredencialesRepository credencialesRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder encoder;
 
     @Override
     public Credenciales registrar(RegisterCredencialesDTO registerCredencialesDTO) {
@@ -20,7 +20,7 @@ public class CredencialesServiceImpl implements CredencialesService {
 
         Credenciales credenciales = Credenciales.builder()
                 .username(registerCredencialesDTO.username())
-                .password(passwordEncoder.encode(registerCredencialesDTO.password()))
+                .password(encoder.encode(registerCredencialesDTO.password()))
                 .empleado(registerCredencialesDTO.empleado())
                 .repartidor(registerCredencialesDTO.repartidor())
                 .build();
@@ -30,7 +30,7 @@ public class CredencialesServiceImpl implements CredencialesService {
     @Override
     public Credenciales login(String username, String rawPassword) {
         return credencialesRepository.findByUsername(username)
-                .filter(c -> passwordEncoder.matches(rawPassword, c.getPassword()))
+                .filter(c -> encoder.matches(rawPassword, c.getPassword()))
                 .orElse(null);
     }
 }
