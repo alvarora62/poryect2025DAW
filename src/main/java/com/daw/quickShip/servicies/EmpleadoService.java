@@ -13,6 +13,7 @@ public interface EmpleadoService {
 
     Page<Empleado> listAll(Pageable pageable);
     List<SelectEmpleadoDTO> selectList();
+    Empleado findById(Long idEmpleado);
 
     ResponseEntity<Void> create(RegisterEmpleadoDTO dto);
     ResponseEntity<Void> update(String dni, RegisterEmpleadoDTO dto);
