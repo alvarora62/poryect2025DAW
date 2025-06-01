@@ -44,9 +44,9 @@ public class PedidoController {
         return pedidoService.setEmpleado(pedidoId, empleadoId);
     }
 
-    @PutMapping("/{id}/repartidor")
+    @PutMapping("/{id}/repartidor/{nombreEmpresa}")
     @Operation(summary = "Assign a repartidor by empresa", description = "Assigns a repartidor with the fewest deliveries from a given empresa.")
-    public ResponseEntity<Void> setRepartidor(@PathVariable("id") Long pedidoId, @RequestParam String nombreEmpresa) {
+    public ResponseEntity<Void> setRepartidor(@PathVariable("id") Long pedidoId, @PathVariable String nombreEmpresa) {
         return pedidoService.setRepartidor(pedidoId, nombreEmpresa);
     }
 
