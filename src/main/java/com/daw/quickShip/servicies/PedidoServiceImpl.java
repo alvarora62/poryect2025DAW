@@ -27,43 +27,17 @@ public class PedidoServiceImpl implements PedidoService{
     private final EstadoPedidoService estadoPedidoService;
     private final ProductoService productoService;
 
-    /**
-     * Retrieves a paginated list of all orders.
-     *
-     * @param pageable the pagination and sorting information.
-     * @return a page of {@link Pedido} entities.
-     */
     @Override
     public Page<Pedido> listAll(Pageable pageable) {
         return pedidoRepository.findAll(pageable);
     }
 
-    /**
-     * Finds an order by its ID.
-     *
-     * @param idPedido the ID of the order to retrieve.
-     * @return the {@link Pedido} found.
-     * @throws ResourceNotFoundException if no order is found with the given ID.
-     */
     @Override
     public Pedido findById(Long idPedido) {
         return pedidoRepository.findById(idPedido)
                 .orElseThrow(() -> new ResourceNotFoundException("Pedido not found."));
     }
 
-    /**
-     * Creates and saves a new {@link Pedido} using data from a {@link PedidoDTO}.
-     * <p>
-     * The new order is initialized with a default state of "NOT STARTED", and it is
-     * associated with a specific product and employee. The delivery company is set
-     * as an empty string by default.
-     * </p>
-     *
-     * @param pedidoDTO the data transfer object containing order details.
-     * @return a {@link ResponseEntity} indicating success with HTTP 200 OK.
-     * @throws ResourceNotFoundException if the product or employee is not found,
-     *                                   or if the default state is missing.
-     */
     @Override
     @Transactional
     public ResponseEntity<Void> save(PedidoDTO pedidoDTO) {
@@ -76,18 +50,11 @@ public class PedidoServiceImpl implements PedidoService{
                 .repartidorEmpresa("")
                 .build();
 
+        pedido.setEstado(updateStatus(pedido).getEstado());
         pedidoRepository.save(pedido);
         return ResponseEntity.ok().build();
     }
 
-
-    /**
-     * Assigns an employee to a specific order.
-     *
-     * @param idPedido   the ID of the order.
-     * @param idEmpleado the ID of the employee to assign.
-     * @return a {@link ResponseEntity} indicating success.
-     */
     @Override
     @Transactional
     public ResponseEntity<Void> setEmpleado(Long idPedido, Long idEmpleado) {
@@ -95,19 +62,11 @@ public class PedidoServiceImpl implements PedidoService{
         Empleado empleado = empleadoService.findById(idEmpleado);
 
         pedido.setEmpleado(empleado);
+        pedido.setEstado(updateStatus(pedido).getEstado());
         pedidoRepository.save(pedido);
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * Assigns a delivery person (repartidor) to an order from the specified company.
-     * Selects the repartidor with the fewest orders assigned.
-     *
-     * @param idPedido       the ID of the order.
-     * @param nombreEmpresa  the name of the delivery company.
-     * @return a {@link ResponseEntity} indicating success.
-     * @throws ResourceNotFoundException if no repartidor is found.
-     */
     @Override
     @Transactional
     public ResponseEntity<Void> setRepartidor(Long idPedido, String nombreEmpresa) {
@@ -123,19 +82,12 @@ public class PedidoServiceImpl implements PedidoService{
                 .orElseThrow(() -> new ResourceNotFoundException("Any repartidores found to assign."));
 
         pedido.setRepartidor(repartidorConMenosPedidos);
+        pedido.setEstado(updateStatus(pedido).getEstado());
         pedidoRepository.save(pedido);
 
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * Updates the status of a given order.
-     *
-     * @param idPedido the ID of the order to update.
-     * @param status   the new status to apply.
-     * @return a {@link ResponseEntity} indicating success.
-     * @throws ResourceNotFoundException if the order or status is not found.
-     */
     @Override
     @Transactional
     public ResponseEntity<Void> changeActiveStatus(Long idPedido, String status) {
@@ -146,4 +98,34 @@ public class PedidoServiceImpl implements PedidoService{
         pedidoRepository.save(pedido);
         return ResponseEntity.ok().build();
     }
+
+    /**
+     * Updates the status of a {@link Pedido} based on its assigned repartidor and empleado.
+     * <ul>
+     *     <li>If both repartidor and empleado are null, sets status to "NOT STARTED".</li>
+     *     <li>If empleado is null, sets status to "EMPLOYEE NOT ASSIGNED".</li>
+     *     <li>If repartidor is null, sets status to "SHIPPING COMPANY NOT ASSIGNED".</li>
+     *     <li>Otherwise, sets status to "READY FOR DELIVERY".</li>
+     * </ul>
+     *
+     * @param pedido the {@link Pedido} whose status will be updated.
+     * @return the updated {@link Pedido} instance.
+     * @throws IllegalStateException if the corresponding status cannot be found.
+     */
+    private Pedido updateStatus(Pedido pedido) {
+        String estado;
+
+        if (pedido.getRepartidor() == null && pedido.getEmpleado() == null) {
+            estado = "NOT STARTED";
+        } else if (pedido.getEmpleado() == null) {
+            estado = "EMPLOYEE NOT ASSIGNED";
+        } else if (pedido.getRepartidor() == null) {
+            estado = "SHIPPING COMPANY NOT ASSIGNED";
+        } else {
+            estado = "READY FOR DELIVEY";
+        }
+        pedido.setEstado(estadoPedidoService.findByName(estado));
+        return pedido;
+    }
+
 }
