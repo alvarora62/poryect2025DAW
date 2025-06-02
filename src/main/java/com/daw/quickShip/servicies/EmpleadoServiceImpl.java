@@ -23,8 +23,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EmpleadoServiceImpl implements EmpleadoService {
 
+    private final AuditoriaServiceImpl auditoriaService;
     private final EmpleadoRepository empleadoRepository;
-    private final CredencialesServiceImpl credencialesService;
+    private final CredencialesService credencialesService;
 
     /**
      * Retrieves a paginated list of all employees.
@@ -106,6 +107,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
                 )
         );
 
+        auditoriaService.realizarAnotacion("admin", "Creado nuevo empleado con ID: " + empleado.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -134,6 +136,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
         empleadoRepository.save(existingEmpleado);
 
+        auditoriaService.realizarAnotacion("admin", "Actualizado empleado con ID: " + existingEmpleado.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -154,6 +157,8 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         empleado.setActive(isActive);
         empleadoRepository.save(empleado);
 
+        String action = isActive ? "Activado empleado con ID: " + empleado.getId() : "Desactivado empleado con ID: " + empleado.getDni();
+        auditoriaService.realizarAnotacion("admin", action);
         return ResponseEntity.ok().build();
     }
 

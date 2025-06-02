@@ -23,6 +23,7 @@ public class RepartidorServiceImpl implements RepartidorService {
 
     private final RepartidorRepository repartidorRepository;
     private final CredencialesServiceImpl credencialesService;
+    private AuditoriaService auditoriaService;
 
     @Override
     public Page<Repartidor> listAll(Pageable pageable) {
@@ -75,6 +76,7 @@ public class RepartidorServiceImpl implements RepartidorService {
                 )
         );
 
+        auditoriaService.realizarAnotacion("admin", "Creado el repartidor con ID: " + savedRepartidor.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -91,8 +93,8 @@ public class RepartidorServiceImpl implements RepartidorService {
         existingRepartidor.setTelefono(registerRepartidorDTO.telefono());
         existingRepartidor.setEmail(registerRepartidorDTO.email());
 
-        repartidorRepository.save(existingRepartidor);
-
+        Repartidor updatedRepartidor = repartidorRepository.save(existingRepartidor);
+        auditoriaService.realizarAnotacion("admin", "Actualizado el repartidor con ID: " + updatedRepartidor.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -103,7 +105,8 @@ public class RepartidorServiceImpl implements RepartidorService {
                 .orElseThrow(() -> new EntityNotFoundException("Repartidor with DNI: " + dniRepartidor + " not found."));
 
         repartidor.setActive(isActive);
-        repartidorRepository.save(repartidor);
+        Repartidor updatedRepartidor = repartidorRepository.save(repartidor);
+        auditoriaService.realizarAnotacion("admin", "Actualizado el estado del repartidor con ID: " + repartidor.getId());
 
         return ResponseEntity.ok().build();
     }

@@ -26,6 +26,7 @@ public class PedidoServiceImpl implements PedidoService{
     private final RepartidorService repartidorService;
     private final EstadoPedidoService estadoPedidoService;
     private final ProductoService productoService;
+    private final AuditoriaService auditoriaService;
 
     @Override
     public Page<Pedido> listAll(Pageable pageable) {
@@ -51,7 +52,8 @@ public class PedidoServiceImpl implements PedidoService{
                 .build();
 
         pedido.setEstado(updateStatus(pedido).getEstado());
-        pedidoRepository.save(pedido);
+        Pedido newPedido = pedidoRepository.save(pedido);
+        auditoriaService.realizarAnotacion("admin", "Creado pedido con ID: " + newPedido.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -63,7 +65,8 @@ public class PedidoServiceImpl implements PedidoService{
 
         pedido.setEmpleado(empleado);
         pedido.setEstado(updateStatus(pedido).getEstado());
-        pedidoRepository.save(pedido);
+        Pedido newPedido = pedidoRepository.save(pedido);
+        auditoriaService.realizarAnotacion("admin", "Asignado empleado con ID: " + idEmpleado + " al pedido con ID: " + newPedido.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -83,7 +86,8 @@ public class PedidoServiceImpl implements PedidoService{
 
         pedido.setRepartidor(repartidorConMenosPedidos);
         pedido.setEstado(updateStatus(pedido).getEstado());
-        pedidoRepository.save(pedido);
+        Pedido newPedido = pedidoRepository.save(pedido);
+        auditoriaService.realizarAnotacion("admin", "Asignada empresa: " + nombreEmpresa + " al pedido con ID: " + newPedido.getId());
 
         return ResponseEntity.ok().build();
     }
@@ -95,7 +99,9 @@ public class PedidoServiceImpl implements PedidoService{
         EstadoPedido estadoPedido = estadoPedidoService.findByName(status);
 
         pedido.setEstado(estadoPedido);
-        pedidoRepository.save(pedido);
+
+        Pedido newPedido = pedidoRepository.save(pedido);
+        auditoriaService.realizarAnotacion("admin", "Cambiado el estado del pedido con ID: " + newPedido.getId() + " a " + status);
         return ResponseEntity.ok().build();
     }
 
