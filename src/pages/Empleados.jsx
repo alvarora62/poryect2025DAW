@@ -196,7 +196,6 @@ function EmpleadoPage() {
               <th>Nombre</th>
               <th>Email</th>
               <th>Teléfono</th>
-              <th>ID</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -216,7 +215,6 @@ function EmpleadoPage() {
                   <td>{empleado.nombre}</td>
                   <td>{empleado.email}</td>
                   <td>{empleado.telefono}</td>
-                  <td>{empleado.idEmpleado}</td>
                   <td>
                     <Button
                       variant="primary"
