@@ -9,23 +9,23 @@ services:
       - mysql
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mi_basedatos
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_DATASOURCE_USERNAME: usuario
+      SPRING_DATASOURCE_PASSWORD: contraseña
     networks:
-      - red-app
+      - springnet
 
   mysql:
-    image: mysql:8
-    container_name: mysql
+    image: mysql:8.0
     restart: always
     environment:
       MYSQL_DATABASE: mi_basedatos
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: contraseña
+      MYSQL_ROOT_PASSWORD: rootpass
     ports:
       - "3306:3306"
     networks:
-      - red-app
+      - springnet
 
 networks:
-  red-app:
+  springnet:
