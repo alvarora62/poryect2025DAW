@@ -8,9 +8,9 @@ services:
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mi_basedatos
-      SPRING_DATASOURCE_USERNAME: usuario
-      SPRING_DATASOURCE_PASSWORD: contraseña
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/quickship
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD:
     networks:
       - springnet
 
@@ -18,9 +18,9 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_DATABASE: mi_basedatos
-      MYSQL_USER: usuario
-      MYSQL_PASSWORD: contraseña
+      MYSQL_DATABASE: quickship
+      MYSQL_USER: root
+      MYSQL_PASSWORD:
       MYSQL_ROOT_PASSWORD: rootpass
     ports:
       - "3306:3306"
