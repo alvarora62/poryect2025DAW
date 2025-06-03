@@ -1,6 +1,5 @@
-FROM ubuntu:latest
+FROM eclipse-temurin:17-jdk-alpine
 VOLUME /tmp
-LABEL authors="alvar"
 
 ARG JAR_FILE=target/mi-app.jar
 COPY ${JAR_FILE} app.jar
