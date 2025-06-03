@@ -20,7 +20,7 @@ services:
     environment:
       MYSQL_DATABASE: quickship
       MYSQL_USER: root
-      MYSQL_PASSWORD:
+      MYSQL_PASSWORD: rootpass
       MYSQL_ROOT_PASSWORD: rootpass
     ports:
       - "3306:3306"
