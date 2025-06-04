@@ -29,6 +29,26 @@ function RepartidorModal({
             />
           </Form.Group>
           <Form.Group className="mb-3">
+            <Form.Label>Nombre de Usuario</Form.Label>
+            <Form.Control
+              type="text"
+              name="username"
+              value={repartidor.username}
+              onChange={onChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Contraseña</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              value={repartidor.password}
+              onChange={onChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
             <Form.Label>DNI</Form.Label>
             <Form.Control
               type="text"
