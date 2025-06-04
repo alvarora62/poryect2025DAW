@@ -2,6 +2,7 @@ package com.daw.quickShip.DTOs;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
 public record RegisterRepartidorDTO(
@@ -21,6 +22,13 @@ public record RegisterRepartidorDTO(
         @Pattern(regexp = "\\d{9}", message = "Formato de teléfono inválido.")
         String telefono,
 
-        String nombreEmpresa
+        @NotEmpty
+        String nombreEmpresa,
+
+        @NotEmpty(message = "El username no puede estar vacío")
+        String username,
+
+        @NotEmpty(message = "La password no puede estar vacío")
+        String password
 
 ) {}

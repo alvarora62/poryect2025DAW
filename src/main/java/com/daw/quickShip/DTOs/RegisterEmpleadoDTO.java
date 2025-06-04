@@ -25,6 +25,12 @@ public record RegisterEmpleadoDTO(
 
         @NotEmpty(message = "El email no puede estar vacío")
         @Email(message = "Formato de email inválido")
-        String email
+        String email,
+
+        @NotEmpty(message = "El username no puede estar vacío")
+        String username,
+
+        @NotEmpty(message = "La password no puede estar vacío")
+        String password
 )
 { }

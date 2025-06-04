@@ -100,8 +100,8 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         // Registrar credenciales
         credencialesService.registrar(
                 new RegisterCredencialesDTO(
-                        registerEmpleadoDTO.email(),
-                        registerEmpleadoDTO.dni(),
+                        registerEmpleadoDTO.username(),
+                        registerEmpleadoDTO.password(),
                         savedEmpleado,
                         null
                 )

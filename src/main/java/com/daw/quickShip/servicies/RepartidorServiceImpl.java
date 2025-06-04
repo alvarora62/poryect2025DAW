@@ -69,8 +69,8 @@ public class RepartidorServiceImpl implements RepartidorService {
         // Registrar credenciales
         credencialesService.registrar(
                 new RegisterCredencialesDTO(
-                        registerRepartidorDTO.email(),
-                        registerRepartidorDTO.dni(),
+                        registerRepartidorDTO.username(),
+                        registerRepartidorDTO.password(),
                         null,
                         savedRepartidor
                 )
