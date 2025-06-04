@@ -12,7 +12,7 @@ const StyledNavbar = styled(Navbar)`
 `;
 
 const Logo = styled.img`
-  height: 40px;
+  height: 60px;
   margin-right: 12px;
   border-radius: 5px;
 `;
