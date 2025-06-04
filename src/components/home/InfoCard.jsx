@@ -77,7 +77,7 @@ const InfoCard = ({ title, type }) => {
   const fetchAuditorias = async () => {
     setLoading(true);
     try {
-      const url = `${config.apiBaseUrl}/api/auditorias?page=0&size=2`;
+      const url = `${config.apiBaseUrl}/api/auditoria/historial?page=0&size=2`;
       const response = await fetch(url);
       const data = await response.json();
       setAuditorias(data.content || []);
@@ -193,7 +193,7 @@ const InfoCard = ({ title, type }) => {
             <tbody>
               {auditorias.map(audit => (
                 <tr key={audit.id}>
-                  <td>{audit.usuario}</td>
+                  <td>{audit.username}</td>
                   <td>{audit.accion}</td>
                   <td>{audit.fecha}</td>
                 </tr>
