@@ -126,7 +126,7 @@ public class PedidoServiceImpl implements PedidoService{
         } else if (pedido.getRepartidor() == null) {
             estado = "SHIPPING COMPANY NOT ASSIGNED";
         } else {
-            estado = "READY FOR DELIVEY";
+            estado = "READY FOR DELIVERY";
         }
         pedido.setEstado(estadoPedidoService.findByName(estado));
         return pedido;
