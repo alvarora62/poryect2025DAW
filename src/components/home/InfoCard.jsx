@@ -150,7 +150,7 @@ const InfoCard = ({ title, type }) => {
                 <tr key={rep.id}>
                   <td>{rep.nombre}</td>
                   <td>{rep.telefono}</td>
-                  <td>{rep.empresa}</td>
+                  <td>{rep.nombreEmpresa}</td>
                 </tr>
               ))}
             </tbody>
