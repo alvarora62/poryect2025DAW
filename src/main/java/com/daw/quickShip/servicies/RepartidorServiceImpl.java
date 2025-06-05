@@ -23,7 +23,7 @@ public class RepartidorServiceImpl implements RepartidorService {
 
     private final RepartidorRepository repartidorRepository;
     private final CredencialesServiceImpl credencialesService;
-    private AuditoriaService auditoriaService;
+    private AuditoriaServiceImpl auditoriaService;
 
     @Override
     public Page<Repartidor> listAll(Pageable pageable) {

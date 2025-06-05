@@ -25,7 +25,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
     private final AuditoriaServiceImpl auditoriaService;
     private final EmpleadoRepository empleadoRepository;
-    private final CredencialesService credencialesService;
+    private final CredencialesServiceImpl credencialesService;
 
     /**
      * Retrieves a paginated list of all employees.

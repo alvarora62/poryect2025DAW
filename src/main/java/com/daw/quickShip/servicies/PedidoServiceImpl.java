@@ -22,11 +22,11 @@ import java.util.List;
 public class PedidoServiceImpl implements PedidoService{
 
     private final PedidoRepository pedidoRepository;
-    private final EmpleadoService empleadoService;
-    private final RepartidorService repartidorService;
-    private final EstadoPedidoService estadoPedidoService;
-    private final ProductoService productoService;
-    private final AuditoriaService auditoriaService;
+    private final EmpleadoServiceImpl empleadoService;
+    private final RepartidorServiceImpl repartidorService;
+    private final EstadoPedidoServiceImpl estadoPedidoService;
+    private final ProductoServiceImpl productoService;
+    private final AuditoriaServiceImpl auditoriaService;
 
     @Override
     public Page<Pedido> listAll(Pageable pageable) {
