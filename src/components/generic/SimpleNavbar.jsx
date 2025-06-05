@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Container } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import logoImage from '../../assets/logo.jpg';
+import logoImage from '../../assets/logo.png';
 
 // Styled Components
 const StyledNavbar = styled(Navbar)`
@@ -12,7 +12,7 @@ const StyledNavbar = styled(Navbar)`
 `;
 
 const Logo = styled.img`
-  height: 40px;
+  height: 60px;
   margin-right: 12px;
   border-radius: 5px;
 `;
