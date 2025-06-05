@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import logoImage from '../../assets/logo.png';
 
-// Styled Components
 const StyledNavbar = styled(Navbar)`
   background-color: #6a0dad;
   padding: 0.75rem 1rem;

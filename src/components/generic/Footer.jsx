@@ -1,7 +1,6 @@
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 
-// Styled Components
 const FooterWrapper = styled.footer`
   background-color: #343a40; /* darker and more elegant */
   padding: 1rem 0;
@@ -19,13 +18,12 @@ const FooterText = styled.p`
   letter-spacing: 0.5px;
 `;
 
-// Component
 const CustomFooter = () => {
   return (
     <FooterWrapper>
       <Container>
         <FooterText>
-          © {new Date().getFullYear()} Your Company Name. All rights reserved.
+          © {new Date().getFullYear()} QuickShip. Todos los derechos reservados.
         </FooterText>
       </Container>
     </FooterWrapper>

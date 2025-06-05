@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import logoImage from '../../assets/logo.png';
 
-// Styled Components
 const StyledNavbar = styled(Navbar)`
   background-color: #6a0dad;
   padding: 0.75rem 1rem;
@@ -76,12 +75,10 @@ const MenuSection = styled(Nav)`
   align-items: center;
 `;
 
-// Optional logout handler logic
 const CustomNavbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Optional: clear auth tokens or session info here
     navigate('/');
   };
 
