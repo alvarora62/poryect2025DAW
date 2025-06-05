@@ -140,7 +140,6 @@ function PedidoPage() {
         <CenteredTable bordered hover>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Dirección</th>
               <th>Estado</th>
               <th>Producto</th>
@@ -155,10 +154,9 @@ function PedidoPage() {
           <tbody>
             {pedidos.map((pedido) => (
               <tr key={pedido.id}>
-                <td>{pedido.id}</td>
                 <td>{pedido.direccion}</td>
                 <td>
-                  <Badge bg="info">{pedido.estado?.nombre || 'Desconocido'}</Badge>
+                  <Badge bg="danger">{pedido.estado?.nombre || 'Desconocido'}</Badge>
                 </td>
                 <td>{pedido.producto?.nombre || 'Sin producto'}</td>
                 <td>{pedido.cantidad}</td>
