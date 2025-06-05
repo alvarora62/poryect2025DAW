@@ -62,6 +62,7 @@ public class RepartidorServiceImpl implements RepartidorService {
                 .dni(registerRepartidorDTO.dni())
                 .email(registerRepartidorDTO.email())
                 .telefono(registerRepartidorDTO.telefono())
+                .nombreEmpresa(registerRepartidorDTO.nombreEmpresa())
                 .build();
 
         Repartidor savedRepartidor = repartidorRepository.save(repartidor);
@@ -92,6 +93,7 @@ public class RepartidorServiceImpl implements RepartidorService {
         existingRepartidor.setNombre(registerRepartidorDTO.nombre());
         existingRepartidor.setTelefono(registerRepartidorDTO.telefono());
         existingRepartidor.setEmail(registerRepartidorDTO.email());
+        existingRepartidor.setNombreEmpresa(registerRepartidorDTO.nombreEmpresa());
 
         Repartidor updatedRepartidor = repartidorRepository.save(existingRepartidor);
         auditoriaService.realizarAnotacion("admin", "Actualizado el repartidor con ID: " + updatedRepartidor.getId());
