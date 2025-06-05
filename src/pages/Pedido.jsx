@@ -55,7 +55,7 @@ function PedidoPage() {
 
   const fetchPedidos = async () => {
     try {
-      const url = `${config.apiBaseUrl}/api/pedidos?page=${page}&size=${size}`;
+      const url = `${config.apiBaseUrl}/api/pedidos?page=${page}&size=4`;
       const response = await fetch(url);
       const data = await response.json();
 
