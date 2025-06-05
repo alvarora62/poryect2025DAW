@@ -36,6 +36,7 @@ function RepartidorModal({
               value={repartidor.username}
               onChange={onChange}
               required
+              disabled={editMode}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -46,6 +47,7 @@ function RepartidorModal({
               value={repartidor.password}
               onChange={onChange}
               required
+              disabled={editMode}
             />
           </Form.Group>
           <Form.Group className="mb-3">

@@ -36,6 +36,7 @@ function EmpleadoModal({
               value={empleado.username}
               onChange={onChange}
               required
+              disabled={editMode}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -46,6 +47,7 @@ function EmpleadoModal({
               value={empleado.password}
               onChange={onChange}
               required
+              disabled={editMode}
             />
           </Form.Group>
           <Form.Group className="mb-3">
