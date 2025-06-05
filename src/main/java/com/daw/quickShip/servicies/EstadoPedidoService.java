@@ -3,7 +3,11 @@ package com.daw.quickShip.servicies;
 import com.daw.quickShip.entities.EstadoPedido;
 import com.daw.quickShip.exceptions.ResourceNotFoundException;
 
+import java.util.List;
+
 public interface EstadoPedidoService {
+
+    List<EstadoPedido> findAll();
 
     /**
      * Finds an order status by its name.
