@@ -17,4 +17,9 @@ public class EstadoPedidoServiceImpl implements EstadoPedidoService{
         return estadoPedidoRepository.findByNombre(status.toUpperCase())
                 .orElseThrow(() -> new ResourceNotFoundException("Estado not valid."));
     }
+
+    @Override
+    public void save(EstadoPedido estadoPedido) {
+        estadoPedidoRepository.save(estadoPedido);
+    }
 }

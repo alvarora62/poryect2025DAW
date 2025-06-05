@@ -13,4 +13,6 @@ public interface EstadoPedidoService {
      * @throws ResourceNotFoundException if no status with the given name exists.
      */
     EstadoPedido findByName(String status);
+
+    void save(EstadoPedido estadoPedido);
 }
