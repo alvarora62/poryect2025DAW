@@ -13,4 +13,6 @@ public interface ProductoService {
      * @throws ResourceNotFoundException if no product with the given ID is found.
      */
     Producto findById(Long id);
+
+    void save(Producto producto);
 }

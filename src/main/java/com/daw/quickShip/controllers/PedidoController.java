@@ -32,7 +32,7 @@ public class PedidoController {
         return pedidoService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/save")
     @Operation(summary = "Create a new pedido", description = "Saves a new pedido using provided data.")
     public ResponseEntity<Void> save(@RequestBody PedidoDTO pedidoDTO) {
         return pedidoService.save(pedidoDTO);

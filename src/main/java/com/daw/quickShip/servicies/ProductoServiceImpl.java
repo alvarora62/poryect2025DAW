@@ -17,4 +17,9 @@ public class ProductoServiceImpl implements ProductoService{
         return productoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto not found."));
     }
+
+    @Override
+    public void save(Producto producto) {
+        productoRepository.save(producto);
+    }
 }
