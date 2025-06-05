@@ -48,7 +48,7 @@ public class PedidoServiceImpl implements PedidoService{
                 .producto(productoService.findById(pedidoDTO.idProducto()))
                 .cantidad(pedidoDTO.cantidad())
                 .empleado(empleadoService.findById(pedidoDTO.idEmpleado()))
-                .repartidorEmpresa("")
+                .repartidorEmpresa(pedidoDTO.nombreEmpresa())
                 .build();
 
         pedido.setEstado(updateStatus(pedido).getEstado());

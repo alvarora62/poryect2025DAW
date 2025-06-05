@@ -44,7 +44,7 @@ public interface PedidoService {
     /**
      * Assigns an employee to a specific order.
      *
-     * @param idPedido   the ID of the order.
+     * @param ididPedido   the ID of the order.
      * @param idEmpleado the ID of the employee to assign.
      * @return a {@link ResponseEntity} indicating success.
      */
