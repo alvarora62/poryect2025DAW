@@ -46,9 +46,11 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     @Override
     public List<SelectEmpleadoDTO> selectList() {
         return empleadoRepository.findAll().stream()
+                .filter(Empleado::isActive)
                 .map(empleado -> new SelectEmpleadoDTO(empleado.getId(), empleado.getNombre()))
                 .collect(Collectors.toList());
     }
+
 
     /**
      * Retrieves an employee by their ID.

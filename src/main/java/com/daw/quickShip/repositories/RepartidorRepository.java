@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface RepartidorRepository extends JpaRepository<Repartidor, Long> {
 
-    @Query("SELECT DISTINCT r.nombreEmpresa FROM Repartidor r WHERE r.nombreEmpresa IS NOT NULL")
+    @Query("SELECT DISTINCT r.nombreEmpresa FROM Repartidor r WHERE r.nombreEmpresa IS NOT NULL AND r.active = true")
     List<String> findDistinctNombreEmpresa();
     List<Repartidor> findByNombreEmpresa(String nombreEmpresa);
     Optional<Repartidor> findByDni(String dni);
